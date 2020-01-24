@@ -13,16 +13,17 @@ module.exports = {
      
     async store (request,response){
         const {github_username,techs,latitude,longitude}=request.body;
-        
+        console.log(request.body);
         let dev = await Dev.findOne({github_username});
 
         if(!dev){
             const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
+            console.log(apiResponse);
     
         const { name = login,avatar_url,bio} =apiResponse.data;
                 
         const techsArrray = parseStringAsArray(techs);
-        
+        console.log(techsArrray);
     
         const location = {
             type:'Point', 
@@ -42,5 +43,6 @@ module.exports = {
         }
 
         return response.json(dev);
+
     }
 };
